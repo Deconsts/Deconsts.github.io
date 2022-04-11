@@ -10,8 +10,7 @@
     <title>VScode更新导致ssh连接失败的解决方法 | </title>
     <meta name="author" content="John Doe">
     
-    <meta name="description" content="问题产生原因VScode使用remote SSH连接时需要在远程机上安装用于连接的服务端文件，VScode更新后相应的服务端文件也要更新，如果此时目标机没有联网，或者更新过程中出错，就可能持续无法连上。
-解决方案根据VScode报错信息，先将~/.vscode-server/bin/$&amp;#123;c">
+    <meta name="description" content="问题产生原因VScode使用remote SSH连接时需要在远程机上安装用于连接的服务端文件，VScode更新后相应的服务端文件也要更新，如果此时目标机没有联网，或者更新过程中出错，就可能持续无法连上。">
     
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -271,6 +270,7 @@
 
             <div class="entry light-green-link-context">
                 <h1 id="问题产生原因"><a href="#问题产生原因" class="headerlink" title="问题产生原因"></a>问题产生原因</h1><p>VScode使用remote SSH连接时需要在远程机上安装用于连接的服务端文件，VScode更新后相应的服务端文件也要更新，如果此时目标机没有联网，或者更新过程中出错，就可能持续无法连上。</p>
+<span id="more"></span>
 <h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>根据VScode报错信息，先将<code>~/.vscode-server/bin/$&#123;commit_id&#125;</code>文件夹删除，重新连接触发重新更新。</p>
 <p>如果还失败，说明是网络原因，在可以联网的机器上先离线下载所需的服务端文件，然后通过VScode以外的方式传输上去，下面是具体操作。</p>
 <p>在触发下载时在目标机输入</p>
