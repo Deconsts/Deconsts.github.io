@@ -7,13 +7,21 @@
 
     
 
-    <title>归档：2022/3 | </title>
+    <title>常用命令 | </title>
     <meta name="author" content="John Doe">
+    
+    <meta name="description" content="j记录一些常用但容易忘记参数的Linux命令，包括nohup、tar。
+nohup用于在系统后台不挂断地运行命令，退出终端不会影响程序的运行。
+1nohup Command [Arg] [&amp;amp;]
+
+Command：要执行的命令。
+Arg：一些参数，可以指定输出文件。
+**&amp;amp;**：让命令">
     
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    
+    <meta property="og:title" content="常用命令"/>
     <meta property="og:site_name" content="Hexo"/>
 
     
@@ -215,46 +223,109 @@
 
     <main>
         <div class="container main-container">
-    
-
-<nav class="page-nav hide-on-small-only">
+    <nav class="page-nav hide-on-small-only">
     <div class="nav-wrapper brown darken-1">
-        <span class="breadcrumb">当前位置（归档）</span>
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/Linux工具箱/">Linux工具箱</a>
+
+
         
 
         
     </div>
 </nav>
 
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>常用命令</h1>
+    
 
 
-    <ul class="collapsible mt-0" data-collapsible="accordion">
+            </div>
+            <time class="light-green-link-context" datetime="2022-04-09T08:24:34.000Z"><a href="/2022/04/09/Linux%E5%B7%A5%E5%85%B7%E7%AE%B1/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">2022-04-09</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
         
+            <a href="/tags/Linux/" class="chip light-green">Linux</a>
         
-            <li>
-                <div class="collapsible-header active">
-                    <i class="fa fa-archive"></i>2022
-                </div>
-                <div class="collapsible-body">
-                    <div class="collection">
-                        
-                            <a href="/2022/03/20/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/%E5%8D%9A%E5%AE%A2/raytaylorism/" class="collection-item grey-text text-darken-1">
-                                <time datetime="2022-03-20T03:38:05.000Z">2022-03-20</time>
-                                <span>&nbsp;&nbsp;&nbsp;</span>
-                                转载：主题raytaylorism使用说明
-                            </a>
-                        
-                            <a href="/2022/03/20/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/%E5%8D%9A%E5%AE%A2/hello-world/" class="collection-item grey-text text-darken-1">
-                                <time datetime="2022-03-20T03:37:59.000Z">2022-03-20</time>
-                                <span>&nbsp;&nbsp;&nbsp;</span>
-                                Hexo使用说明
-                            </a>
-                        
-                    </div>
-                </div>
-            </li>
+            <a href="/tags/shell/" class="chip light-green">shell</a>
         
-    </ul>
+    </div>
+
+
+            <div class="toc light-green-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#nohup"><span class="section table-of-contents-text">nohup</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#tar"><span class="section table-of-contents-text">tar</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#nohup-1"><span class="section table-of-contents-text">nohup</span></a></li></ol>
+</div>
+
+
+            <div class="entry light-green-link-context">
+                <p>j记录一些常用但容易忘记参数的Linux命令，包括nohup、tar。</p>
+<h1 id="nohup"><a href="#nohup" class="headerlink" title="nohup"></a>nohup</h1><p>用于在系统后台不挂断地运行命令，退出终端不会影响程序的运行。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup Command [Arg] [&amp;]</span><br></pre></td></tr></table></figure>
+
+<p><strong>Command</strong>：要执行的命令。</p>
+<p><strong>Arg</strong>：一些参数，可以指定输出文件。</p>
+<p>**&amp;**：让命令在后台执行，终端退出后命令仍旧执行。</p>
+<h1 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h1><p>压缩与解压。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar [-Args] [file_name]</span><br></pre></td></tr></table></figure>
+
+<p>以下参数使用一个：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-c：建立压缩档案 </span><br><span class="line">-x：解压 </span><br><span class="line">-t：查看内容 </span><br><span class="line">-r：向压缩归档文件末尾追加文件 </span><br><span class="line">-u：更新原压缩包中的文件</span><br></pre></td></tr></table></figure>
+
+<p>以下参数可选：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-z：有gzip属性的 </span><br><span class="line">-j：有bz2属性的 </span><br><span class="line">-Z：有compress属性的 </span><br><span class="line">-v：显示所有过程 </span><br><span class="line">-O：将文件解开到标准输出 </span><br></pre></td></tr></table></figure>
+
+<p>以下参数必须：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-f: 使用档案名字，切记，这个参数是最后一个参数，后面只能接档案名。 </span><br></pre></td></tr></table></figure>
+
+<h1 id="nohup-1"><a href="#nohup-1" class="headerlink" title="nohup"></a>nohup</h1><p>用于在系统后台不挂断地运行命令，退出终端不会影响程序的运行。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup Command [Arg] [&amp;]</span><br></pre></td></tr></table></figure>
+
+<p><strong>Command</strong>：要执行的命令。</p>
+<p><strong>Arg</strong>：一些参数，可以指定输出文件。</p>
+<p>**&amp;**：让命令在后台执行，终端退出后命令仍旧执行。</p>
+
+                
+<p class="light-green-link-context">
+    <a href="/2022/04/11/Linux%E5%B7%A5%E5%85%B7%E7%AE%B1/vscode%20ssh/" rel="next" title="VScode更新导致ssh连接失败的解决方法">
+    上一篇：VScode更新导致ssh连接失败的解决方法
+  </a>
+</p>
+
+
+
+<p class="light-green-link-context">
+    <a href="/2022/03/20/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/%E5%8D%9A%E5%AE%A2/raytaylorism/" rel="next" title="转载：主题raytaylorism使用说明">
+    下一篇：转载：主题raytaylorism使用说明
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
 
 
 </div>
