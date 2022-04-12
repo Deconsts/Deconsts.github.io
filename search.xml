@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>CAT技术的使用方法</title>
+      <link href="/2022/04/12/Intel/CAT/"/>
+      <url>/2022/04/12/Intel/CAT/</url>
+      
+        <content type="html"><![CDATA[<h1 id="CAT技术介绍"><a href="#CAT技术介绍" class="headerlink" title="CAT技术介绍"></a>CAT技术介绍</h1><p>Intel CAT 技术的基本功能是根据 CPUID（也就是逻辑核）分配 L3 Cache，并提供了开启它的软件接口。L3 Cache 预先被划分成多路，例如 Intel E5 6130 的 22MB LLC 是 11 路，然后可以以路为基本单位分配给不同的逻辑核，每个逻辑核至少分配 1 路，默认情况下所有核共享整个 LLC。</p><h1 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h1><p>Intel 多核处理器拥有共享的L3 Cache，不论其采取Inclusive 还是Non-inclusive策略，多核同时有访存需求时，就可能出现 L3 Cache 资源竞争。在绝大多数情况下，访存是必要的，这种竞争无法避免，但是在一些特殊的访存模式下，情况有所不同。考虑一个多核处理器的场景，一个处理器核正在运行流式应用，例如多媒体应用，它的访存模式是顺序、大规模地读取和写入一片内存，与此同时，其他处理器核在执行计算密集型任务，每个核所需要的内存空间略大于私有Cache，但不超过 L3 Cache 平均到每个核的大小。在这种情况下，如果没有那个流式应用，这些处理器核可以轻易地共享 L3 Cache，互相不会挤占，也不会触发Cache miss。加入了流式应用让情况发生了变化，读写大片连续的空间会占用其他核合理的 L3 Cache，将大量有效数据替换出去，下次再读写的时候就需要重新访问内存，这会大幅增加 Cache miss 率，远高于流式应用本身访问内存的次数。</p><p>出现这种问题的原因是有的应用访存范围大，打破了核之间的平衡，污染了共享 Cache。解决方案则是对 L3 Cache 进行划分，可以给一些核分配固定大小的 Cache，阻止了它越界污染了其他部分的 Cache，这就可以减少大量不必要的Cache miss。</p><h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>CAT 技术提供了一种被称为 Class of Service（CLOS）的结构，逻辑核可以被分配进不同的 CLOS，每个 CLOS 可以设置一种资源掩码resource capacity bitmask（CBM），通过掩码每一位的 0 或 1 控制是否共享这一路 LLC。CAT 的 LLC 分配规则只适用于第一次访问的 Cache miss 时位置的选择，如果一个数据已经被加载进 LLC，所有核都可以无限制地从这里读取数据，并放入自己的私有 Cache 中，只有触发 Cache miss 的数据被加载进 LLC 时才会限制写进对应的路。Intel CAT 提供了多种管理接口，这里描述三种。这些接口不能混用，否则会出现不确定的执行结果。</p><h1 id="使用方法一——pqos"><a href="#使用方法一——pqos" class="headerlink" title="使用方法一——pqos"></a>使用方法一——pqos</h1><p>Intel 提供了一个管理工具 pqos，通过命令行的方式运行 pqos 并给适当的参数就可以设置 CLOS 和CBM，此外通过这个工具还可以实时查看每个核的 LLC 占用情况，与预期对比。</p><p>在<a href="https://github.com/intel/intel-cmt-cat/tree/master/pqos">这里</a>安装pqos，也可以使用它支持的CMT等其他功能。</p><p>直接运行pqos可以查看实时LLC分配情况。</p><p>可以使用的命令：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pqos -s</span><br></pre></td></tr></table></figure><p>查看所有CLOS和CBM。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pqos -a &quot;llc:8=0-15;&quot;</span><br></pre></td></tr></table></figure><p>修改CLOS的一个例子。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pqos -e &quot;llc:0=0x0700;llc:8=0x00ff;&quot;</span><br></pre></td></tr></table></figure><p>修改CBM的一个例子。</p><h1 id="使用方法二——MSR"><a href="#使用方法二——MSR" class="headerlink" title="使用方法二——MSR"></a>使用方法二——MSR</h1><p>CLOS 和 CBM 本身是基于 Model-Specific Registers（MSR）的结构，因此可以通过 msrrd 和 msrwr 命令直接修改 MSR 寄存器中的值。</p><h1 id="使用方法三——resctrl"><a href="#使用方法三——resctrl" class="headerlink" title="使用方法三——resctrl"></a>使用方法三——resctrl</h1><p>可以使用Resource Control（resctrl）文件系统来管理 CAT，这是一个内核界面，需要从内核配置项中启用，并挂载这个文件系统，resctrl 中每个 COS 是一个文件夹，初始是一个文件夹代表所有的核，在这个文件夹内创建新文件夹以建立新的 COS，COS 文件夹下的诸多文件可以修改，用于设置该 COS 对应的逻辑核和 CBM。具体使用参考<a href="https://github.com/intel/intel-cmt-cat/wiki/resctrl">这里</a>。注意使用resctrl需要配置Linux Configuration启用。</p><p>一个简单的使用例子：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mount –t resctrl resctrl [-o cdp] /sys/fs/resctrl</span><br><span class="line">cd /sys/fs/resctrl</span><br><span class="line">mkdir COS1</span><br><span class="line">echo “3” &gt; COS1/cpus</span><br><span class="line">cat cpu</span><br><span class="line">c</span><br><span class="line">cat COS1/cpu</span><br><span class="line">3</span><br><span class="line">echo &quot;L3:0=1&quot; &gt; COS1/schemata</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Intel </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Intel </tag>
+            
+            <tag> CAT </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C语言的const关键字</title>
       <link href="/2022/04/11/c%E8%AF%AD%E8%A8%80/const/"/>
       <url>/2022/04/11/c%E8%AF%AD%E8%A8%80/const/</url>
@@ -13,16 +40,14 @@
       
       <categories>
           
-          <category> Linux工具箱 </category>
+          <category> C语言 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> Linux </tag>
-            
-            <tag> VScode </tag>
+            <tag> C </tag>
             
         </tags>
       
@@ -77,6 +102,31 @@
             <tag> Linux </tag>
             
             <tag> VScode </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Linux Configuration配置</title>
+      <link href="/2022/04/11/Linux%E5%B7%A5%E5%85%B7%E7%AE%B1/Linux%20Configuration/"/>
+      <url>/2022/04/11/Linux%E5%B7%A5%E5%85%B7%E7%AE%B1/Linux%20Configuration/</url>
+      
+        <content type="html"><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>Linux Configuration在Linux内核v4.10之后被支持，可以在启动后配置Linux功能、模块。</p><span id="more"></span><h1 id="配置方法"><a href="#配置方法" class="headerlink" title="配置方法"></a>配置方法</h1><p>首先进入<code>/usr/src/Linux</code>文件夹。</p><p>然后可以使用</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make config</span><br></pre></td></tr></table></figure><p>使用命令行逐条设置config选项。（非常繁杂）</p><p>或者使用</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make menuconfig</span><br></pre></td></tr></table></figure><p>这是一个类似BIOS的图形化界面，需要安装一些依赖。</p><p>或者使用</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make xconfig</span><br></pre></td></tr></table></figure><p>基于QT，需要有x window system支持。</p><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://how-to.fandom.com/wiki/How_to_configure_the_Linux_kernel">https://how-to.fandom.com/wiki/How_to_configure_the_Linux_kernel</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux工具箱 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Linux </tag>
             
         </tags>
       
