@@ -7,13 +7,15 @@
 
     
 
-    <title>归档：2022 | </title>
+    <title>常用命令 | </title>
     <meta name="author" content="John Doe">
+    
+    <meta name="description" content="记录一些常用但容易忘记参数的Linux命令，包括nohup、tar等。">
     
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    
+    <meta property="og:title" content="常用命令"/>
     <meta property="og:site_name" content="Hexo"/>
 
     
@@ -215,64 +217,125 @@
 
     <main>
         <div class="container main-container">
-    
-
-<nav class="page-nav hide-on-small-only">
+    <nav class="page-nav hide-on-small-only">
     <div class="nav-wrapper brown darken-1">
-        <span class="breadcrumb">当前位置（归档）</span>
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/Linux工具箱/">Linux工具箱</a>
+
+
         
 
         
     </div>
 </nav>
 
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>常用命令</h1>
+    
 
 
-    <ul class="collapsible mt-0" data-collapsible="accordion">
+            </div>
+            <time class="light-green-link-context" datetime="2022-04-11T14:32:13.000Z"><a href="/2022/04/11/Linux%E5%B7%A5%E5%85%B7%E7%AE%B1/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">2022-04-11</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
         
+            <a href="/tags/Linux/" class="chip light-green">Linux</a>
         
-            <li>
-                <div class="collapsible-header active">
-                    <i class="fa fa-archive"></i>2022
-                </div>
-                <div class="collapsible-body">
-                    <div class="collection">
-                        
-                            <a href="/2022/04/11/c%E8%AF%AD%E8%A8%80/const/" class="collection-item grey-text text-darken-1">
-                                <time datetime="2022-04-11T14:33:44.000Z">2022-04-11</time>
-                                <span>&nbsp;&nbsp;&nbsp;</span>
-                                C语言的const关键字
-                            </a>
-                        
-                            <a href="/2022/04/11/Linux%E5%B7%A5%E5%85%B7%E7%AE%B1/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="collection-item grey-text text-darken-1">
-                                <time datetime="2022-04-11T14:32:13.000Z">2022-04-11</time>
-                                <span>&nbsp;&nbsp;&nbsp;</span>
-                                常用命令
-                            </a>
-                        
-                            <a href="/2022/04/11/Linux%E5%B7%A5%E5%85%B7%E7%AE%B1/vscode%20ssh/" class="collection-item grey-text text-darken-1">
-                                <time datetime="2022-04-11T14:21:56.000Z">2022-04-11</time>
-                                <span>&nbsp;&nbsp;&nbsp;</span>
-                                VScode更新导致ssh连接失败的解决方法
-                            </a>
-                        
-                            <a href="/2022/03/20/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/%E5%8D%9A%E5%AE%A2/raytaylorism/" class="collection-item grey-text text-darken-1">
-                                <time datetime="2022-03-20T03:38:05.000Z">2022-03-20</time>
-                                <span>&nbsp;&nbsp;&nbsp;</span>
-                                转载：主题raytaylorism使用说明
-                            </a>
-                        
-                            <a href="/2022/03/20/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/%E5%8D%9A%E5%AE%A2/hello-world/" class="collection-item grey-text text-darken-1">
-                                <time datetime="2022-03-20T03:37:59.000Z">2022-03-20</time>
-                                <span>&nbsp;&nbsp;&nbsp;</span>
-                                Hexo使用说明
-                            </a>
-                        
-                    </div>
-                </div>
-            </li>
+            <a href="/tags/shell/" class="chip light-green">shell</a>
         
-    </ul>
+    </div>
+
+
+            <div class="toc light-green-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#nohup"><span class="section table-of-contents-text">nohup</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#tar"><span class="section table-of-contents-text">tar</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#%E7%AE%A1%E9%81%93"><span class="section table-of-contents-text">管道</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#%E6%96%87%E4%BB%B6%E6%9F%A5%E7%9C%8B"><span class="section table-of-contents-text">文件查看</span></a></li></ol>
+</div>
+
+
+            <div class="entry light-green-link-context">
+                <p>记录一些常用但容易忘记参数的Linux命令，包括nohup、tar等。</p>
+<span id="more"></span>
+<h1 id="nohup"><a href="#nohup" class="headerlink" title="nohup"></a>nohup</h1><p>用于在系统后台不挂断地运行命令，退出终端不会影响程序的运行。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup Command [Arg] [&amp;]</span><br></pre></td></tr></table></figure>
+
+<p><strong>Command</strong>：要执行的命令。</p>
+<p><strong>Arg</strong>：一些参数，可以指定输出文件。</p>
+<p>**&amp;**：让命令在后台执行，终端退出后命令仍旧执行。</p>
+<h1 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h1><p>压缩与解压。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar [-Args] [file_name]</span><br></pre></td></tr></table></figure>
+
+<p>以下参数使用一个：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-c：建立压缩档案 </span><br><span class="line">-x：解压 </span><br><span class="line">-t：查看内容 </span><br><span class="line">-r：向压缩归档文件末尾追加文件 </span><br><span class="line">-u：更新原压缩包中的文件</span><br></pre></td></tr></table></figure>
+
+<p>以下参数可选：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-z：有gzip属性的 </span><br><span class="line">-j：有bz2属性的 </span><br><span class="line">-Z：有compress属性的 </span><br><span class="line">-v：显示所有过程 </span><br><span class="line">-O：将文件解开到标准输出 </span><br></pre></td></tr></table></figure>
+
+<p>以下参数必须：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-f: 使用档案名字，切记，这个参数是最后一个参数，后面只能接档案名。 </span><br></pre></td></tr></table></figure>
+
+<h1 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h1><p>管道本身是一种文件，通过重定向设置前一个命令的标准输出为下一条命令的标准输入。这里简单罗列一下重定向的用法：</p>
+<ul>
+<li>标准输入 (stdin): 代码为0，使用&lt;或&lt;&lt;；</li>
+<li>标准输出 (stdout): 代码为1，使用&gt;或&gt;&gt;；</li>
+<li>标准错误输出(stderr): 代码为2，使用2&gt;或2&gt;&gt;；</li>
+<li>m&gt;&amp;n：把标准错误输出重定向到标准输出；</li>
+<li>&amp;&gt;file：把标准输出和标准错误输出都重定向到文件file中。</li>
+</ul>
+<p>管道后面经常加：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">command | grep [-cinv] [-A] [-B] pattern filename</span><br><span class="line"> -c：只输出匹配的总次数</span><br><span class="line"> -i：忽略大小写</span><br><span class="line"> -n：仅仅显示匹配的行号，及匹配的行</span><br><span class="line"> -v：反向选择，显示没有keyword的行</span><br><span class="line"> -A：后面加数字，为after，除了列出匹配的行，再将后续的n行列出来</span><br><span class="line"> -B：后面加数字，为before，除了列出匹配的行，再将前面的n行列出来</span><br><span class="line"> pattern为具体的要查找的正则表达式</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">command | sed [-nefr] [[n1[,n2]] function]</span><br><span class="line">-n：使用silent模式，默认所有来自STDIN的数据都会显示在屏幕上，加上-n则只有经过sed处理才显示</span><br><span class="line">-e：直接在命令行模式上进行sed的操作编辑，主要是多点编辑，一行可以处理多个命令</span><br><span class="line">-f：直接将sed操作写在一个文件内，-f filename则可以执行文件内sed操作</span><br><span class="line">-r：sed操作支持的是扩展正则表达式语法(默认为基础正则)</span><br><span class="line">-i： 直接修改读取的文件内容，会真正的修改原始文档</span><br><span class="line">操作说明：[n1[,n2]] function</span><br><span class="line">function参数：</span><br><span class="line">a：新增，a后面可以接字符串，字符串会在当前的下一行出现</span><br><span class="line">c：替换，c后面可以接字符串，这些字符串可以替换n1,n2之间的行</span><br><span class="line">d：删除，不需接任何内容</span><br><span class="line">i：插入，i后面接字符串，字符串在当前的上一行出现</span><br><span class="line">p：打印，打印某个选择的数据，通常与sed -n一起运行</span><br><span class="line">s：搜索，不但可以搜索，还可以替换，如：1,20s/old/new/g</span><br><span class="line">sed后面的动作一定是要用‘’括住</span><br></pre></td></tr></table></figure>
+
+<p>还有awk、cut、sort、uniq、wc、split、comm等。</p>
+<h1 id="文件查看"><a href="#文件查看" class="headerlink" title="文件查看"></a>文件查看</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat</span><br><span class="line">-b：对非空输出行编号</span><br><span class="line">-n：对输出的所有行编号,由1开始对所有输出的行数编号</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">more [+/-n] filename</span><br><span class="line">+n：从第n行开始显示</span><br><span class="line">-n：屏幕仅显示n行</span><br><span class="line">按空白键（space）就往下一页显示，按 b 键就会往回（back）一页显示</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">less</span><br><span class="line">-N  显示每行的行号</span><br></pre></td></tr></table></figure>
+
+<p>less 与 more 类似，但使用 less 可以随意浏览文件，而 more 仅能向前移动，却不能向后移动，而且 less 在查看之前不会加载整个文件。（less可以一行一行向上（按上键）向下（按下键或空格）翻，而more只能向上（b）向下（空格）翻一屏）</p>
+
+                
+<p class="light-green-link-context">
+    <a href="/2022/04/11/c%E8%AF%AD%E8%A8%80/const/" rel="next" title="C语言的const关键字">
+    上一篇：C语言的const关键字
+  </a>
+</p>
+
+
+
+<p class="light-green-link-context">
+    <a href="/2022/04/11/Linux%E5%B7%A5%E5%85%B7%E7%AE%B1/vscode%20ssh/" rel="next" title="VScode更新导致ssh连接失败的解决方法">
+    下一篇：VScode更新导致ssh连接失败的解决方法
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
 
 
 </div>
